@@ -1,0 +1,26 @@
+ do {
+         System.out.println("Choisissez le type d'opération :");
+         System.out.println("1. Opération binaire");
+         System.out.println("2. Opération unaire");
+         System.out.println("3. Quitter");
+
+         int choixTypeOperation = scanner.nextInt();
+
+         switch (choixTypeOperation) {
+             case 1:
+                 faireOperationBinaire(scanner);
+                 break;
+             case 2:
+                 faireOperationUnaire(scanner);
+                 break;
+             case 3:
+                 System.out.println("Au revoir !");
+                 break;
+             default:
+                 System.out.println("Choix invalide.");
+         }
+
+     } while (continuer(scanner));
+
+     scanner.close();
+ }
