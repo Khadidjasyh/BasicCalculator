@@ -1,0 +1,234 @@
+import java.util.Scanner;
+
+// Interface CalculMath
+public interface CalculMath {
+    double calculer();
+}
+
+// Classe abstraite OperationBinaire
+public abstract class OperationBinaire implements CalculMath {
+    protected double valeur1;
+    protected double valeur2;
+
+    public OperationBinaire(double valeur1, double valeur2) {
+        this.valeur1 = valeur1;
+        this.valeur2 = valeur2;
+    }
+}
+
+// Classe abstraite OperationUnaire
+public abstract class OperationUnaire implements CalculMath {
+    protected double valeur;
+
+    public OperationUnaire(double valeur) {
+        this.valeur = valeur;
+    }
+}
+
+// Classes pour les opérations binaires
+public class Addition extends OperationBinaire {
+    public Addition(double valeur1, double valeur2) {
+        super(valeur1, valeur2);
+    }
+
+    public double calculer() {
+        return valeur1 + valeur2;
+    }
+}
+
+public class Soustraction extends OperationBinaire {
+    public Soustraction(double valeur1, double valeur2) {
+        super(valeur1, valeur2);
+    }
+
+    public double calculer() {
+        return valeur1 - valeur2;
+    }
+}
+
+public class Multiplication extends OperationBinaire {
+    public Multiplication(double valeur1, double valeur2) {
+        super(valeur1, valeur2);
+    }
+
+    public double calculer() {
+        return valeur1 * valeur2;
+    }
+}
+
+public class Division extends OperationBinaire {
+    public Division(double valeur1, double valeur2) {
+        super(valeur1, valeur2);
+    }
+
+    public double calculer() {
+        if (valeur2 != 0) {
+            return valeur1 / valeur2;
+        } else {
+            System.out.println("Erreur: Division par zéro.");
+            return Double.NaN;
+        }
+    }
+}
+
+// Classes pour les opérations unaires
+public class Sin extends OperationUnaire {
+    public Sin(double valeur) {
+        super(valeur);
+    }
+
+    public double calculer() {
+        return Math.sin(valeur);
+    }
+}
+
+public class Cos extends OperationUnaire {
+    public Cos(double valeur) {
+        super(valeur);
+    }
+
+    public double calculer() {
+        return Math.cos(valeur);
+    }
+}
+
+public class Log extends OperationUnaire {
+    public Log(double valeur) {
+        super(valeur);
+    }
+
+    public double calculer() {
+        if (valeur > 0) {
+            return Math.log(valeur);
+        } else {
+            System.out.println("Erreur: Logarithme d'un nombre non positif.");
+            return Double.NaN;
+        }
+    }
+}
+
+public class Exp extends OperationUnaire {
+    public Exp(double valeur) {
+        super(valeur);
+    }
+
+    public double calculer() {
+        return Math.exp(valeur);
+    }
+}
+
+public class Sqrt extends OperationUnaire {
+    public Sqrt(double valeur) {
+        super(valeur);
+    }
+
+    public double calculer() {
+        if (valeur >= 0) {
+            return Math.sqrt(valeur);
+        } else {
+            System.out.println("Erreur: Racine carrée d'un nombre négatif.");
+            return Double.NaN;
+        }
+    }
+}
+
+// Classe Calculatrice
+public class Calculatrice {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Choisissez le type d'opération :");
+        System.out.println("1. Opération binaire");
+        System.out.println("2. Opération unaire");
+
+        int choixTypeOperation = scanner.nextInt();
+
+        if (choixTypeOperation == 1) {
+            faireOperationBinaire(scanner);
+        } else if (choixTypeOperation == 2) {
+            faireOperationUnaire(scanner);
+        } else {
+            System.out.println("Choix invalide.");
+        }
+
+        scanner.close();
+    }
+
+    private static void faireOperationBinaire(Scanner scanner) {
+        System.out.println("Choisissez l'opération binaire :");
+        System.out.println("1. Addition");
+        System.out.println("2. Soustraction");
+        System.out.println("3. Multiplication");
+        System.out.println("4. Division");
+
+        int choixOperation = scanner.nextInt();
+
+        System.out.println("Entrez la première valeur :");
+        double valeur1 = scanner.nextDouble();
+
+        System.out.println("Entrez la deuxième valeur :");
+        double valeur2 = scanner.nextDouble();
+
+        CalculMath operation = null;
+
+        switch (choixOperation) {
+            case 1:
+                operation = new Addition(valeur1, valeur2);
+                break;
+            case 2:
+                operation = new Soustraction(valeur1, valeur2);
+                break;
+            case 3:
+                operation = new Multiplication(valeur1, valeur2);
+                break;
+            case 4:
+                operation = new Division(valeur1, valeur2);
+                break;
+            default:
+                System.out.println("Choix invalide.");
+                return;
+        }
+
+        System.out.println("Résultat : " + operation.calculer());
+    }
+
+    private static void faireOperationUnaire(Scanner scanner) {
+        System.out.println("Choisissez l'opération unaire :");
+        System.out.println("1. Sinus");
+        System.out.println("2. Cosinus");
+        System.out.println("3. Logarithme");
+        System.out.println("4. Exponentielle");
+        System.out.println("5. Racine carrée");
+
+        int choixOperation = scanner.nextInt();
+
+        System.out.println("Entrez la valeur :");
+        double valeur = scanner.nextDouble();
+
+        CalculMath operation = null;
+
+        switch (choixOperation) {
+            case 1:
+                operation = new Sin(valeur);
+                break;
+            case 2:
+                operation = new Cos(valeur);
+                break;
+            case 3:
+                operation = new Log(valeur);
+                break;
+            case 4:
+                operation = new Exp(valeur);
+                break;
+            case 5:
+                operation = new Sqrt(valeur);
+                break;
+            default:
+                System.out.println("Choix invalide.");
+                return;
+        }
+
+        System.out.println("Résultat : " + operation.calculer());
+    }
+}
+
